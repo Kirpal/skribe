@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.959798"
-     inkscape:cx="105.78043"
-     inkscape:cy="2.0203807"
+     inkscape:cx="72.697937"
+     inkscape:cy="0.37215005"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -57,12 +57,12 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-21.911296,-17.219184)">
+     transform="translate(-21.911295,-16.783088)">
     <flowRoot
        xml:space="preserve"
        id="flowRoot3713"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       transform="matrix(0.49092962,0,0,0.49092962,-18.744719,-28.747591)"><flowRegion
+       transform="matrix(0.47442426,0,0,0.47465375,-17.377839,-27.39659)"><flowRegion
          id="flowRegion3715"><rect
            id="rect3717"
            width="1014.2857"
@@ -70,7 +70,7 @@
            x="82.85714"
            y="88.233971" /></flowRegion><flowPara
          id="flowPara3719"
-         style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'PT Serif';-inkscape-font-specification:'PT Serif Bold Italic';letter-spacing:0px">sc<flowSpan
+         style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'PT Serif';-inkscape-font-specification:'PT Serif Bold Italic';letter-spacing:0px">sk<flowSpan
    style="letter-spacing:1px"
    id="flowSpan3933">rī</flowSpan>be</flowPara></flowRoot>  </g>
 </svg>

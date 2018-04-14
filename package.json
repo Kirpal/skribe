@@ -1,0 +1,27 @@
+{
+  "name": "skribe",
+  "version": "1.0.0",
+  "description": "A collaborative writing app",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mysql": "^2.15.0",
+    "pug": "^2.0.3",
+    "randomstring": "^1.1.5",
+    "socket.io": "^2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kirpal/skribe.git"
+  },
+  "author": "Kirpal Demian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kirpal/skribe/issues"
+  },
+  "homepage": "https://github.com/Kirpal/skribe#readme"
+}
