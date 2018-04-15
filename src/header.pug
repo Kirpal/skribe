@@ -21,5 +21,6 @@ html
             function onSignIn(googleUser) {
                 $.post('/login', {id: googleUser.getAuthResponse().id_token}, (res) => {
                     console.log(res)
+                    console.log(JSON.decode(res))
                 });
             }

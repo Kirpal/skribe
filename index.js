@@ -89,7 +89,7 @@ db.once('open', () => {
             user.save((err, user) => {
                 if(!err) {
                     console.log(user)
-                    res.send(user.id)
+                    res.json({id: user.id})
                 }
             });
         }
