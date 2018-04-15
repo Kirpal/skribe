@@ -41,90 +41,94 @@ html
         script(src="https://code.jquery.com/jquery-3.3.1.min.js")
         script(src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js")
         script.
-
-            $("#current.notEdited").on("focusin", function(){
-                $(this).text("").removeClass("notEdited");
-            });
-
-            const socket = io();
-            const room = "#{room}";
-
-            socket.on('connect', () => {
-                socket.emit('room', room);
-                $('.code').val(room);
-                new ClipboardJS('.code')
-            })
-
-            $('.vote').click((e) => {
-                socket.emit('vote', $(e.target).parent('.vote').data('emoji'));
-            })
-
-            $('#story').children('p:not(#current)').each((idx, element) => {
-                console.log(element)
-                $(element).css('border-left-color', $(element).data('color'))
-            })
-
-            $('#current').on('input', (e) => {
-                if(['.', '.', '?', '!', '\'', '"'].indexOf(e.target.textContent.substr(-1)) !== -1) {
-                    socket.emit("word", e.target.textContent.split(" "));
-                } else {
-                    socket.emit("input", {input: e.target.textContent, author: window.sessionStorage.user});
-                }
-            });
-
-            $('#current').on("keydown", (e) => {
-                if(e.keyCode === 32) {
-                    socket.emit("word", e.target.textContent.split(" "));
-                }else if(e.keyCode === 8 && e.target.textContent.slice(-1) === " " || e.target.textContent.length === 0) {
-                    socket.emit("word", e.target.textContent.slice(0, -1).split(" "))
-                }
-            });
-
-            socket.on("updateViewers", (viewers) => {
-                $('#viewer-number').html(viewers)
-            });
-
-            $("#reactions").css("width", $("#emojis").width() + "px");
-            socket.on("vote", (vote) => {
-                $('.vote[data-emoji=' + vote.vote + ']').children('.emoji-num').html(vote.count);
-                if((new Date).getTime() > lastReact + 1000) {
-                    leftPos = ($("." + vote.vote).offset().left - $("#emojis").offset().left);
-                    emojiType = vote.vote;
-                    element = $("<div class='icon "+emojiType+"' data-original='"+leftPos+"'></div>");
-                    $("#reactions").append(element);
-                    element.css("left", leftPos + "px");
-                    lastReact = (new Date).getTime();
-                }
-            });
-
-            setInterval(function(){
-                $("#reactions .icon").each(function(){
-                    element = $(this);
-                    original = element.attr("data-original");
-                    parentHeight = $("#reactions").height();
-                    vertical = element.position().top;
-                    horizontal = element.position().left;
-                    size = element.width();
-                    leftChange = Math.random() * 1 * (Math.round(Math.random()) == 1 ? -1 : 1 );
-                    opacity = parseFloat(element.css("opacity"));
-                    if(leftChange + horizontal < original - 16 && leftChange < 0)
-                    {
-                        leftChange = -leftChange;
-                    }
-                    if(leftChange + horizontal > original + 16 && leftChange > 0)
-                    {
-                        leftChange = -leftChange;
-                    }
-                    
-                    if(opacity <= 0)
-                    {
-                        element.remove();
-                    }
-                    
-                    element.css({
-                        "top": (vertical - 1) + "px",
-                        "left": (horizontal + leftChange) + "px",
-                        "opacity": opacity - 0.005
-                    });
+            $(window).ready(() => {
+                $("#current.notEdited").focus(function(){
+                    $(this).text("").removeClass("notEdited");
                 });
-            }, 10);
+
+                const socket = io();
+                const room = "#{room}";
+
+                socket.on('connect', () => {
+                    socket.emit('room', room);
+                    $('.code').val(room);
+                    if(window.sessionStorage.user) {
+                        socket.emit('user', window.sessionStorage.user);
+                    }
+                    new ClipboardJS('.code')
+                })
+
+                $('.vote').click((e) => {
+                    socket.emit('vote', $(e.target).parent('.vote').data('emoji'));
+                })
+
+                $('#story').children('p:not(#current)').each((idx, element) => {
+                    console.log(element)
+                    $(element).css('border-left-color', $(element).data('color'))
+                })
+
+                $('#current').on('input', (e) => {
+                    if(['.', '.', '?', '!', '\'', '"'].indexOf(e.target.textContent.substr(-1)) !== -1) {
+                        socket.emit("word", e.target.textContent.split(" "));
+                    } else {
+                        socket.emit("input", {input: e.target.textContent, author: window.sessionStorage.user});
+                    }
+                });
+
+                $('#current').on("keydown", (e) => {
+                    if(e.keyCode === 32) {
+                        socket.emit("word", e.target.textContent.split(" "));
+                    }else if(e.keyCode === 8 && e.target.textContent.slice(-1) === " " || e.target.textContent.length === 0) {
+                        socket.emit("word", e.target.textContent.slice(0, -1).split(" "))
+                    }
+                });
+
+                socket.on("updateViewers", (viewers) => {
+                    $('#viewer-number').html(viewers)
+                });
+
+                $("#reactions").css("width", $("#emojis").width() + "px");
+                socket.on("vote", (vote) => {
+                    $('.vote[data-emoji=' + vote.vote + ']').children('.emoji-num').html(vote.count);
+                    if((new Date).getTime() > lastReact + 1000) {
+                        leftPos = ($("." + vote.vote).offset().left - $("#emojis").offset().left);
+                        emojiType = vote.vote;
+                        element = $("<div class='icon "+emojiType+"' data-original='"+leftPos+"'></div>");
+                        $("#reactions").append(element);
+                        element.css("left", leftPos + "px");
+                        lastReact = (new Date).getTime();
+                    }
+                });
+
+                setInterval(function(){
+                    $("#reactions .icon").each(function(){
+                        element = $(this);
+                        original = element.attr("data-original");
+                        parentHeight = $("#reactions").height();
+                        vertical = element.position().top;
+                        horizontal = element.position().left;
+                        size = element.width();
+                        leftChange = Math.random() * 1 * (Math.round(Math.random()) == 1 ? -1 : 1 );
+                        opacity = parseFloat(element.css("opacity"));
+                        if(leftChange + horizontal < original - 16 && leftChange < 0)
+                        {
+                            leftChange = -leftChange;
+                        }
+                        if(leftChange + horizontal > original + 16 && leftChange > 0)
+                        {
+                            leftChange = -leftChange;
+                        }
+                        
+                        if(opacity <= 0)
+                        {
+                            element.remove();
+                        }
+                        
+                        element.css({
+                            "top": (vertical - 1) + "px",
+                            "left": (horizontal + leftChange) + "px",
+                            "opacity": opacity - 0.005
+                        });
+                    });
+                }, 10);
+            })
