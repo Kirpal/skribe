@@ -71,7 +71,7 @@ db.once('open', () => {
         res.render(__dirname + '/src/create.pug');
     })
     
-    app.get('/verify', (req, res) => {
+    app.post('/verify', (req, res) => {
         async function verify() {
             const ticket = await client.verifyIdToken({
                 idToken: req.params.id,
