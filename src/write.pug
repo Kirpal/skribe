@@ -64,11 +64,11 @@ html
                 $(element).css('border-left-color', $(element).data('color'))
             })
 
-            $('#current').on('keydown', (e) => {
+            $('#current').on('input', (e) => {
                 if(['.', '.', '?', '!', '\'', '"'].indexOf(e.target.textContent.substr(-1)) !== -1) {
                     socket.emit("word", e.target.textContent.split(" "));
                 } else {
-                    socket.emit("input", e.target.textContent);
+                    socket.emit("input", {input: e.target.textContent, author: window.sessionStorage.user});
                 }
             });
 

@@ -134,7 +134,7 @@ db.once('open', () => {
 
         socket.on('input', ({input: input, author: author}) => {
             Story.findById(socket.room, (err, story) => {
-                if(story.story[story.story.length - 1].author === author) {
+                if(story.story.length > 0 && story.story[story.story.length - 1].author === author) {
                     story.story[story.story.length - 1].text = input
                 } else {
                     story.story.push({
