@@ -73,6 +73,7 @@ db.once('open', () => {
     })
     
     app.post('/login', (req, res) => {
+        console.log(req.params.id)
         async function verify(token) {
             const ticket = await client.verifyIdToken({
                 idToken: token,
