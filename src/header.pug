@@ -12,7 +12,7 @@ html
                 ul
                     li
                         a(href="/") Home
-                    li Genres
+                    li#genre-link Genres
                     li
                         a(href="/stories") Stories
                     .g-signin2(data-onsuccess="onSignIn")
@@ -33,12 +33,15 @@ html
             function onSignIn(googleUser) {
                 $.post('/login', {id: googleUser.getAuthResponse().id_token}, (res) => {
                     window.sessionStorage.user = res.id;
+                    $('.g-signin2').replaceWith('<li class="user"><a href="/create">Create Story</a></div>')
                 });
             }
 
             if(window.sessionStorage.user) {
                 $('.g-signin2').replaceWith('<li class="user"><a href="/create">Create Story</a></div>')
             }
+            
+            $("#genres").addClass("loaded")
 
             $("#genre-link").click(function(){
                 $("#genres").addClass("active");

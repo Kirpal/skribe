@@ -91,6 +91,8 @@ html, body {
   opacity: 0;
   visibility: hidden;
   cursor: default;
+}
+#genres.loaded {
   transition: all 0.2s;
 }
 #genres.active {
