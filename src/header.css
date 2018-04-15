@@ -1,8 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans|PT+Serif:700");
+html, body {
+  margin: 0;
+  padding: 0;
+}
 #header {
   padding: 25px;
   margin-bottom: 40px;
   height: 35px;
+  box-sizing: border-box;
 }
 #header #logo {
   position: absolute;
