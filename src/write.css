@@ -28,6 +28,7 @@ body, html {
   color: #555;
   border: none;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 #story {
