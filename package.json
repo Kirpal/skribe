@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "express": "^4.16.3",
+    "google-auth-library": "^1.4.0",
     "mongoose": "^5.0.14",
     "mongoose-shortid-nodeps": "^0.6.5",
     "pug": "^2.0.3",

@@ -19,5 +19,7 @@ html
 
         script.
             function onSignIn(googleUser) {
-                console.log(googleUser.getBasicProfile().getName());
+                $.post('/login', {id: googleUser.getAuthResponse().id_token}, (res) => {
+                    console.log(res)
+                });
             }

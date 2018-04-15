@@ -5,6 +5,8 @@ const io = require('socket.io')(http);
 const mongoose = require('mongoose');
 const ShortId = require('mongoose-shortid-nodeps');
 const randomstring = require('randomstring');
+const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client('179911329052-bt7801c9hu6gqh174qv0jl28clftchj1.apps.googleusercontent.com');
 
 mongoose.connect(process.env.MONGO_URL);
 let db = mongoose.connection;
@@ -29,9 +31,16 @@ db.once('open', () => {
             'thumbs-down': Number,
             love: Number
         }
+    });
+
+    const userSchema = mongoose.Schema({
+        id: Number,
+        name: String,
+        email: String
     })
 
     const Story = mongoose.model('Story', storySchema);
+    const User = mongoose.model('User', userSchema);
     
     app.use("/static", express.static(__dirname + '/src'))
     app.use(express.urlencoded())
@@ -62,9 +71,31 @@ db.once('open', () => {
         res.render(__dirname + '/src/create.pug');
     })
     
+    app.get('/verify', (req, res) => {
+        async function verify() {
+            const ticket = await client.verifyIdToken({
+                idToken: req.params.id,
+                audience: '179911329052-bt7801c9hu6gqh174qv0jl28clftchj1.apps.googleusercontent.com',
+            });
+            const payload = ticket.getPayload();
+            const userid = payload['sub'];
+            let user = new User({
+                id: payload['sub'],
+                name: payload['name'],
+                email: payload['email']
+            })
+            user.save((err, user) => {
+                if(!err) {
+                    res.send(user.id)
+                }
+            });
+        }
+        verify().catch(console.error);
+    })
+
     app.post('/create', (req, res) => {
         let story = new Story({
-            author: req.body.author,
+            //author: req.body.author,
             title: req.body.title,
             prompt: req.body.prompt,
             private: req.body.private
@@ -76,7 +107,7 @@ db.once('open', () => {
             }
         });
     })
-    
+
     io.on('connection', (socket) => {
     
         socket.on('room', (room) => {
