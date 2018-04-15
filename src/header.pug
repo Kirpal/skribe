@@ -23,3 +23,7 @@ html
                     window.sessionStorage.user = res.id;
                 });
             }
+
+            if(window.sessionStorage.user) {
+                $('.g-signin2').replaceWith('<div class="user">Logout</div>')
+            }
