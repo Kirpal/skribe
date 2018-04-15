@@ -156,6 +156,7 @@ db.once('open', () => {
                     story.votes[vote] += 1;
                     io.to(socket.room).emit("vote", {vote: vote, count: story.votes[vote]});
                 }
+                story.save();
             });
         });
     });
