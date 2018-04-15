@@ -24,9 +24,20 @@ html
                 
                 input#author(name="author", type="hidden")
                 button(type="submit") Create
+
+        script(src="https://code.jquery.com/jquery-3.3.1.min.js")
         script.
             if(window.sessionStorage.user) {
-                document.getElementById('author').value = window.sessionStorage.user;
+                $('#author').val(window.sessionStorage.user);
             } else {
-                window.location = "/login";
+                $('button[type="submit"]').replaceWith('<div class="g-signin2" data-onsuccess="onSignInSubmit"></div>')
+                function onSignInSubmit() {
+                    if (!window.sessionStorage.user) {
+                        $.post('/login', {id: googleUser.getAuthResponse().id_token}, (res) => {
+                            window.sessionStorage.user = JSON.parse(res).id;
+                            $('#author').val(window.sessionStorage.user);
+                            $('form').submit();
+                        });
+                    }
+                }
             }
