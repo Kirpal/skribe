@@ -31,7 +31,7 @@ html
                 $('#author').val(window.sessionStorage.user);
             } else {
                 $('button[type="submit"]').replaceWith('<div class="g-signin2" data-onsuccess="onSignInSubmit"></div>')
-                function onSignInSubmit() {
+                function onSignInSubmit(googleUser) {
                     if (!window.sessionStorage.user) {
                         $.post('/login', {id: googleUser.getAuthResponse().id_token}, (res) => {
                             window.sessionStorage.user = JSON.parse(res).id;
