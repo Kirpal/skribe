@@ -15,24 +15,25 @@ html
             div#viewers
                 img#viewer-icon(src="https://rawgit.com/Kirpal/skribe/master/src/images/ic_group_black_24dp_2x.png")
                 div#viewer-number 325
+            div#reactions
             div#emojis
-                div.vote(data-emoji="heart")
+                div.vote.heart(data-emoji="heart")
                     img.emojiIcons(src="https://twemoji.maxcdn.com/2/72x72/1f602.png")
                     div.emoji-num= votes["heart"]
 
-                div.vote(data-emoji="laugh")
+                div.vote.laugh(data-emoji="laugh")
                     img.emojiIcons(src="https://twemoji.maxcdn.com/2/72x72/1f60d.png")
                     div.emoji-num= votes["laugh"]
 
-                div.vote(data-emoji="thumbs-up")
+                div.vote.thumbs-up(data-emoji="thumbs-up")
                     img.emojiIcons(src="https://twemoji.maxcdn.com/2/72x72/1f635.png")
                     div.emoji-num= votes["thumbs-up"]
 
-                div.vote(data-emoji="thumbs-down")
+                div.vote.thumbs-down(data-emoji="thumbs-down")
                     img.emojiIcons(src="https://twemoji.maxcdn.com/2/72x72/1f62d.png")
                     div.emoji-num= votes["thumbs-down"]
 
-                div.vote(data-emoji="love")
+                div.vote.love(data-emoji="love")
                     img.emojiIcons(src="https://twemoji.maxcdn.com/2/72x72/1f62d.png")
                     div.emoji-num= votes["love"]
 
@@ -77,6 +78,47 @@ html
             socket.on("updateViewers", (viewers) => {
                 $('#viewer-num').html(viewers)
             });
+
+            $("#reactions").css("width", $("#emojis").width() + "px");
             socket.on("vote", (vote) => {
-                $('.vote[data-emoji=' + vote.vote + ']').children('.emoji-num').html(vote.count)
+                $('.vote[data-emoji=' + vote.vote + ']').children('.emoji-num').html(vote.count);
+
+                leftPos = ($("."+vote.vote).offset().left - $("#emojis").offset().left);
+                emojiType = vote.vote;
+                element = $("<div class='icon "+emojiType+"' data-original='"+leftPos+"'></div>");
+                $("#reactions").append(element);
+                element.css("left", leftPos + "px");
+                lastReact = (new Date).getTime();
             });
+
+            setInterval(function(){
+                $("#reactions .icon").each(function(){
+                    element = $(this);
+                    original = element.attr("data-original");
+                    parentHeight = $("#reactions").height();
+                    vertical = element.position().top;
+                    horizontal = element.position().left;
+                    size = element.width();
+                    leftChange = Math.random() * 1 * (Math.round(Math.random()) == 1 ? -1 : 1 );
+                    opacity = parseFloat(element.css("opacity"));
+                    if(leftChange + horizontal < original - 16 && leftChange < 0)
+                    {
+                        leftChange = -leftChange;
+                    }
+                    if(leftChange + horizontal > original + 16 && leftChange > 0)
+                    {
+                        leftChange = -leftChange;
+                    }
+                    
+                    if(opacity <= 0)
+                    {
+                        element.remove();
+                    }
+                    
+                    element.css({
+                        "top": (vertical - 1) + "px",
+                        "left": (horizontal + leftChange) + "px",
+                        "opacity": opacity - 0.005
+                    });
+                });
+            }, 10);
