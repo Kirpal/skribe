@@ -1,8 +1,8 @@
 doctype html
 html
-	head
-		link(rel="stylesheet", href="/static/read.css", type="text/css")
-	body
+    head
+        link(rel="stylesheet", href="/static/read.css", type="text/css")
+    body
         include header.pug
         section#story
             div#text
@@ -10,7 +10,7 @@ html
                     p(data-color=paragraph.author.color)= paragraph.text
         section#bottom-bar
             div#bottom-bar-inner
-                div#title The Great Gatsby
+                div#title= title
                 div#authors
                     div#author Luca Demian
                     div#next-author Kirpal Demian

@@ -56,7 +56,8 @@ db.once('open', () => {
                 res.render(__dirname + "/src/" + req.params.mode + ".pug", {
                     room: story._id,
                     story: story.story,
-                    votes: story.votes
+                    votes: story.votes,
+                    title: story.title
                 });
             } else {
                 res.redirect('/create');
