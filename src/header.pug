@@ -13,8 +13,10 @@ html
                     li Home
                     li Genres
                     li Stories
-                    .g-signin(data-onsuccess="onSignIn")
-        script(src="https://apis.google.com/js/platform.js")
+                    .g-signin2(data-onsuccess="onSignIn")
+                    
+        script(src="https://apis.google.com/js/platform.js",async="true", defer="true")
+
         script.
             function onSuccess(googleUser) {
                 console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
