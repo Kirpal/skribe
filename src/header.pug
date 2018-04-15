@@ -20,7 +20,6 @@ html
         script.
             function onSignIn(googleUser) {
                 $.post('/login', {id: googleUser.getAuthResponse().id_token}, (res) => {
-                    console.log(res)
-                    window.sessionStorage.user = JSON.parse(res).id;
+                    window.sessionStorage.user = res.id;
                 });
             }
