@@ -1,0 +1,116 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans|PT+Serif:700|Lora");
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+#content h1 {
+  font: 45px "Fira Sans", "sans-serif";
+  font-weight: bold;
+  text-align: center;
+  color: #ff4a4a;
+}
+#content form {
+  background: #FFF;
+  border: 1px rgba(0, 0, 0, 0.2) solid;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 0 auto;
+  width: 400px;
+  box-shadow: 0px 20px 20px -20px rgba(0, 0, 0, 0.1);
+}
+#content form .input {
+  position: relative;
+  display: block;
+  margin-bottom: 20px;
+  width: 100%;
+  height: 50px;
+}
+#content form .input label {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  font: 12px "Fira Sans", "sans-serif";
+  color: rgba(0, 0, 0, 0.4);
+}
+#content form .input input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 3px;
+  padding-top: 18px;
+  box-sizing: border-box;
+  padding-left: 8px;
+  font: 17px "Fira Sans", "sans-serif";
+  border: 1px rgba(0, 0, 0, 0.2) solid;
+}
+#content form .checkbox {
+  display: block;
+  margin-bottom: 20px;
+}
+#content form .checkbox span {
+  font: 15px "Fira Sans", "sans-serif";
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+  color: #FFF;
+  color: rgba(0, 0, 0, 0.4);
+}
+#content form .checkbox input {
+  display: none;
+}
+#content form .checkbox label {
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  background: #FFF;
+  position: relative;
+  z-index: 1;
+  border-radius: 12px;
+  border: 1px rgba(0, 0, 0, 0.4) solid;
+  box-sizing: border-box;
+}
+#content form .checkbox label::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 10px;
+  height: 10px;
+  background: #FFF;
+  border-radius: 8px;
+}
+#content form .checkbox input:checked ~ label::after {
+  background: rgba(0, 0, 0, 0.4);
+}
+#content form button {
+  background: #ff4a4a;
+  border: none;
+  font: 20px "Fira Sans", "sans-serif";
+  font-weight: bold;
+  padding: 10px 20px;
+  width: 160px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 40px;
+  cursor: pointer;
+  color: #FFF;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+#content form button::after {
+  content: "🡒";
+  padding-left: 15px;
+  font-size: 25px;
+  vertical-align: middle;
+  transition: all 0.2s;
+  position: relative;
+  left: 0px;
+}
+#content form button:hover::after {
+  left: 5px;
+}

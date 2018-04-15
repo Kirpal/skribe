@@ -1,0 +1,23 @@
+doctype html
+html
+    head
+        link(rel="stylesheet", href="/static/write.css", type="text/css")
+
+    body
+        div#content
+        h1#title New Story
+        form(action="/create", method="POST")
+            div.input
+                label(for="title") Title
+                input#title(type="text", name="title")
+                
+            div.input
+                label(for="prompt") Prompt 
+                input#prompt(type="text", name="prompt")
+
+            div.checkbox
+                input(type="hidden", value="false")
+                input#privacy(type="checkbox", name="private", value="true")
+                label(for="privacy")
+                span Private?
+            button(type="submit") Create
