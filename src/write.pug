@@ -87,13 +87,14 @@ html
             $("#reactions").css("width", $("#emojis").width() + "px");
             socket.on("vote", (vote) => {
                 $('.vote[data-emoji=' + vote.vote + ']').children('.emoji-num').html(vote.count);
-
-                leftPos = ($("."+vote.vote).offset().left - $("#emojis").offset().left);
-                emojiType = vote.vote;
-                element = $("<div class='icon "+emojiType+"' data-original='"+leftPos+"'></div>");
-                $("#reactions").append(element);
-                element.css("left", leftPos + "px");
-                lastReact = (new Date).getTime();
+                if((new Date).getTime() > lastReact + 1000) {
+                    leftPos = ($("." + vote.vote).offset().left - $("#emojis").offset().left);
+                    emojiType = vote.vote;
+                    element = $("<div class='icon "+emojiType+"' data-original='"+leftPos+"'></div>");
+                    $("#reactions").append(element);
+                    element.css("left", leftPos + "px");
+                    lastReact = (new Date).getTime();
+                }
             });
 
             setInterval(function(){

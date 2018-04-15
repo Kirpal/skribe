@@ -41,10 +41,6 @@ html
                 new ClipboardJS('.code')
             })
 
-            $('.reaction-button').click((e) => {
-                socket.emit('vote', $(e.target).parent('.reaction-button').data('emoji'));
-            })
-
             $('#story').children('p').each((idx, element) => {
                 console.log(element)
                 $(element).css('border-left-color', $(element).data('color'))

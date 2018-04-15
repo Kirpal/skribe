@@ -118,7 +118,8 @@ db.once('open', () => {
             Story.findById(room, (err, story) => {
                 if (story) {
                     story.viewers += 1;
-                    io.to(room).emit("updateViewers", story.viewers);
+                    socket.broadcast.to(room).emit("updateViewers", story.viewers);
+                    story.save();
                 }
             });
         });
@@ -127,7 +128,8 @@ db.once('open', () => {
             Story.findById(socket.room, (err, story) => {
                 if (story) {
                     story.viewers -= 1;
-                    io.to(socket.room).emit("updateViewers", story.viewers);
+                    socket.broadcast.to(socket.room).emit("updateViewers", story.viewers);
+                    story.save();
                 }
             });
         });
@@ -148,13 +150,14 @@ db.once('open', () => {
         });
 
         socket.on('word', (words) => {
-            io.to(socket.room).emit("updateStory", words);
+            socket.broadcast.to(socket.room).emit("updateStory", words);
         });
         socket.on('vote', (vote) => {
             Story.findById(socket.room, (err, story) => {
+                console.log(vote)
                 if (story) {
                     story.votes[vote] += 1;
-                    io.to(socket.room).emit("vote", {vote: vote, count: story.votes[vote]});
+                    socket.broadcast.to(socket.room).emit("vote", {vote: vote, count: story.votes[vote]});
                 }
                 story.save();
             });
