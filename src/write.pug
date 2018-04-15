@@ -1,83 +1,75 @@
 doctype html
 html
-    head
-        link(rel="stylesheet", href="/static/write.css", type="text/css")
-    body
+	head
+		link(rel="stylesheet", href="/static/write.css", type="text/css")
+	body
 
-        #header
+div#title
+	h1 This is my title.
+	input.code(type="button")
+section#story
+	each paragraph in story
+		p(data-color=paragraph.author.color)= paragraph.text
+	p#current(contenteditable="true")
+div#bottom-bar
+	div#viewers
+		img#viewer-icon(src="https://rawgit.com/Kirpal/skribe/master/src/images/ic_group_black_24dp_2x.png")
+		div#viewer-number 325
+	div#emojis
+		div.vote(data-emoji="laughing")
+			img(src="https://twemoji.maxcdn.com/2/72x72/1f602.png", class="emojiIcons")
+			div.emoji-num=23
+		div.vote(data-emoji="hearts")
+			img(src="https://twemoji.maxcdn.com/2/72x72/1f60d.png", class="emojiIcons")
+			div.emoji-num=23
+		div.vote(data-emoji="dead")
+			img(src="https://twemoji.maxcdn.com/2/72x72/1f635.png", class="emojiIcons")
+			div.emoji-num=23
+		div.vote(data-emoji="crying")	
+			img(src="https://twemoji.maxcdn.com/2/72x72/1f62d.png", class="emojiIcons")
+			div.emoji-num=23
 
-        #content
-        h1#promptTitle This is my title.
-        input.code(type="button")
-        #story
-            each paragraph in story
-                p(data-color=paragraph.author.color)= paragraph.text
-            p#current
-        #textboxShell
-            textarea#textbox(name="storyInput", placeholder="Continue Story...", cols="40")
-        #viewerBar
-            <img id="viewerImg" src="https://rawgit.com/Kirpal/skribe/master/src/images/ic_group_black_24dp_2x.png">
-            <p id="viewerNum">0</p>
-            #emojis
+script(src="/socket.io/socket.io.js")
+script(src="https://code.jquery.com/jquery-3.3.1.min.js")
+script(src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js")
+script.
+    const socket = io();
+    const room = "#{room}";
 
-                .vote(data-emoji="laughing")
-                    img(src="https://twemoji.maxcdn.com/2/72x72/1f602.png", class="emojiIcons")
-                    p.emojiNum= votes['laughing']
-                .vote(data-emoji="hearts")
-                    img(src="https://twemoji.maxcdn.com/2/72x72/1f60d.png", class="emojiIcons")
-                    p.emojiNum= votes['hearts']
-                .vote(data-emoji="dead")
-                    img(src="https://twemoji.maxcdn.com/2/72x72/1f635.png", class="emojiIcons")
-                    p.emojiNum= votes['dead']
-                .vote(data-emoji="crying")    
-                    img(src="https://twemoji.maxcdn.com/2/72x72/1f62d.png", class="emojiIcons")
-                    p.emojiNum= votes['crying']
+    socket.on('connect', () => {
+        socket.emit('room', room);
+        $('.code').val(room);
+        new ClipboardJS('.code')
+    })
 
-        script(src="/socket.io/socket.io.js")
-        script(src="https://code.jquery.com/jquery-3.3.1.min.js")
-        script(src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js")
-        script.
-            const socket = io();
-            const room = "#{room}";
+    $('.vote').click((e) => {
+        socket.emit('vote', $(e.target).parent('.vote').data('emoji'));
+    })
 
-            socket.on('connect', () => {
-                socket.emit('room', room);
-                $('.code').val(room);
-                new ClipboardJS('.code')
-            })
+    $('#story').children('p:not(#current)').each((idx, element) => {
+        console.log(element)
+        $(element).css('border-left-color', $(element).data('color'))
+    })
 
-            $('.vote').click((e) => {
-                socket.emit('vote', $(e.target).parent('.vote').data('emoji'));
-            })
+    $('#current').on('keydown', (e) => {
+        if(['.', '.', '?', '!', '\'', '"'].indexOf(e.target.textContent.substr(-1)) !== -1) {
+            socket.emit("word", e.target.textContent.split(" "));
+        } else {
+            socket.emit("input", e.target.textContent);
+        }
+    });
 
-            $('#story').children('p').each((idx, element) => {
-                console.log(element)
-                $(element).css('border-left-color', $(element).data('color'))
-            })
+    $('#current').keydown((e) => {
+        if(e.keyCode === 32) {
+            socket.emit("word", e.target.textContent.split(" "));
+        }else if(e.keyCode === 8 && e.target.textContent.slice(-1) === " " || e.target.textContent.length === 0) {
+            socket.emit("word", e.target.textContent.slice(0, -1).split(" "))
+        }
+    });
 
-            $('#textboxShell').on('input', (e) => {
-                if(['.', '.', '?', '!', '\'', '"'].indexOf(e.target.value.substr(-1)) !== -1) {
-                    socket.emit("word", e.target.value.split(" "));
-                } else {
-                    socket.emit("input", e.target.value);
-                }
-            });
-
-            $('#textboxShell').keydown((e) => {
-                if(e.keyCode === 32) {
-                    socket.emit("word", e.target.value.split(" "));
-                }else if(e.keyCode === 8 && e.target.value.slice(-1) === " " || e.target.value.length === 0) {
-                    socket.emit("word", e.target.value.slice(0, -1).split(" "))
-                }
-            });
-
-            socket.on('updateStory', (words) => {
-                $('#current').html(words.slice(0, -1).join(' '))
-                $('<span class="word"></span').html(' ' + words.slice(-1)).fadeOut(0).appendTo('#current').fadeIn(100)
-            });
-            socket.on("updateViewers", (viewers) => {
-                $('#viewerNum').html(viewers)
-            });
-            socket.on("vote", (vote) => {
-                $('.vote[data-emoji=' + vote.vote + ']').children('.emojiNum').html(vote.count)
-            });
+    socket.on("updateViewers", (viewers) => {
+        $('#viewer-num').html(viewers)
+    });
+    socket.on("vote", (vote) => {
+        $('.vote[data-emoji=' + vote.vote + ']').children('.emoji-num').html(vote.count)
+    });
