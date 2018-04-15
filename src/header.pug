@@ -19,9 +19,9 @@ html
         script(src="https://code.jquery.com/jquery-3.3.1.min.js")
         script.
             function onSignIn(googleUser) {
-                if (!window.localStorage.user) {
+                if (!window.sessionStorage.user) {
                     $.post('/login', {id: googleUser.getAuthResponse().id_token}, (res) => {
-                        window.localStorage.user = JSON.parse(res).id;
+                        window.sessionStorage.user = JSON.parse(res).id;
                     });
                 }
             }

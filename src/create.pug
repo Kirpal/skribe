@@ -25,8 +25,8 @@ html
                 input#author(name="author", type="hidden")
                 button(type="submit") Create
         script.
-            if(window.localStorage.user) {
-                document.getElementById('author').value = window.localStorage.user;
+            if(window.sessionStorage.user) {
+                document.getElementById('author').value = window.sessionStorage.user;
             } else {
                 window.location = "/login";
             }
