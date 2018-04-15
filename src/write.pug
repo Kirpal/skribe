@@ -10,7 +10,7 @@ html
         section#story
             each paragraph in story
                 p(data-color=paragraph.author.color)= paragraph.text
-            p#current(contenteditable="true")
+            p#current(contenteditable="true", notEdited) Click here to edit...
         div#bottom-bar
             div#viewers
                 img#viewer-icon(src="https://rawgit.com/Kirpal/skribe/master/src/images/ic_group_black_24dp_2x.png")
@@ -41,6 +41,11 @@ html
         script(src="https://code.jquery.com/jquery-3.3.1.min.js")
         script(src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js")
         script.
+
+            $("#current.notEdited").focus(function(){
+                $(this).text("").removeClass("notEdited");
+            });
+
             const socket = io();
             const room = "#{room}";
 
@@ -67,7 +72,7 @@ html
                 }
             });
 
-            $('#current').keydown((e) => {
+            $('#current').on("keydown", (e) => {
                 if(e.keyCode === 32) {
                     socket.emit("word", e.target.textContent.split(" "));
                 }else if(e.keyCode === 8 && e.target.textContent.slice(-1) === " " || e.target.textContent.length === 0) {
