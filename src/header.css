@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans|PT+Serif:700");
+#header {
+  padding: 10px;
+}
+#header #logo {
+  position: absolute;
+}
+#header #logo img {
+  height: 30px;
+}
+
+#nav {
+  font: 20px "Fira Sans", "sans-serif";
+  float: right;
+}
+#nav ul {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+#nav ul .g-signin2 {
+  width: 100px;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: 0.2s all;
+  margin-left: 10px;
+}
+#nav ul .g-signin2 * {
+  box-shadow: none;
+}
+#nav ul .g-signin2:hover {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+#nav ul .g-signin2 .abcRioButtonContents {
+  margin-left: -20px;
+}
+#nav ul li {
+  display: inline-block;
+  color: #000;
+  padding: 5px 0px;
+  margin: 0px 15px;
+  cursor: pointer;
+  transition: 0.1s all;
+}
+#nav ul li::after {
+  content: "";
+  height: 3px;
+  width: 0px;
+  margin-left: 1px;
+  margin-top: 0px;
+  background: #ff4a4a;
+  display: block;
+  transition: all 0.2s;
+}
+#nav ul li:hover:not(#my-signin2) {
+  padding-bottom: 2px;
+}
+#nav ul li:hover:not(#my-signin2)::after {
+  width: 80%;
+}
