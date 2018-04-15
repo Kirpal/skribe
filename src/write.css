@@ -1,97 +1,75 @@
-body {
-    position: relative;
-    width: 60%;
-    left: 20%;
-    font-family: 'Fira Sans', sans-serif;
-  }
-  
-  #content {
-    text-align: center;
-    width: 60%;
-    margin: auto;
-  }
-  
-  #story {
-    text-align: left;
-    margin-bottom: 20px;
-  }
-  
-  #textboxShell {
-    height: 100px;
-  }
-  
-  #textbox {
-    width: 100%;
-    max-width: 100%;
-    height: 98px;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-  
-  #viewerBar {
-    text-align: left;
-    vertical-align: middle;
-    height: 30px;
-    display: block;
-    padding-top: 15px;
-  }
-  
-  #viewerImg {
-    width: 30px;
-    height: 100%;
-    display: inline-block;
-    vertical-align: middle;
-  }
-  
-  #viewerNum {
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0px;
-  }
-  
-  #emojis {
-    float: right;
-    height: 100%;
-  }
-  
-  .emojiIcons {
-    background: none;
-    border: none;
-    text-decoration: none;
-    vertical-align: middle;
-    display: inline-block;
-    width: 30px;
-    height: 100%;
-  }
-  
-  .emojiNum {
-    display: inline-block;
-    margin: 0px;
-    padding: 5px;
-  }
-  
-  #promptTitle {
-    display: inline-block;
-    margin-right: 4px;
-    text-align: center;
-  }
-  
-  .code {
-    background: #ddd;
-    display: inline-block;
-    padding: 4px;
-    border-radius: 2px;
-    font-size: 12px;
-    color: #555;
-    border: none;
-    cursor: pointer;
-  }
-  .vote {
-      display: inline-block;
-      margin: 0 10px 0 10px;
-  }
-  #story p {
-      position: relative;
-      border-left: 2px #000 solid;
-      padding-left: 10px;
-  }
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans|PT+Serif:700|Lora");
+#title {
+  font: 30px "Fira Sans", "sans-serif";
+  display: block;
+  text-align: center;
+}
+#title h1 {
+  font: 40px "Fira Sans", "sans-serif";
+  display: inline-block;
+}
+#title .code {
+  background: #ddd;
+  display: inline-block;
+  padding: 4px;
+  border-radius: 2px;
+  font-size: 12px;
+  color: #555;
+  border: none;
+  cursor: pointer;
+}
+
+#story {
+  font: 18px "Lora", "serif";
+  line-height: 1.6em;
+}
+#story p {
+  box-sizing: border-box;
+  border-left: 4px transparent solid;
+  padding-left: 8px;
+}
+#story p#current {
+  border-left-color: #ff4a4a;
+}
+#story p::before {
+  content: "      ";
+}
+
+#bottom-bar {
+  position: fixed;
+  width: 100%;
+  height: 35px;
+  bottom: 0;
+  left: 0;
+}
+#bottom-bar #viewers {
+  position: absolute;
+  right: 20px;
+  top: 0px;
+}
+#bottom-bar #viewers #viewer-icon {
+  width: 25px;
+  display: inline-block;
+  vertical-align: middle;
+}
+#bottom-bar #viewers #viewer-number {
+  font: 15px "Fira Sans", "sans-serif";
+  display: inline-block;
+  vertical-align: middle;
+}
+#bottom-bar #emojis .vote {
+  display: inline-block;
+  margin: 0px 10px;
+}
+#bottom-bar #emojis .vote img {
+  width: 25px;
+  display: inline-block;
+  vertical-align: middle;
+}
+#bottom-bar #emojis .vote .emoji-num {
+  display: inline-block;
+  font: 15px "Fira Sans", "sans-serif";
+  vertical-align: middle;
+  margin-left: 5px;
+}
