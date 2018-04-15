@@ -38,6 +38,9 @@ html
             socket.on('connect', () => {
                 socket.emit('room', room);
                 $('.code').val(room);
+                if(window.sessionStorage.user) {
+                    socket.emit('user', window.sessionStorage.user);
+                }
                 new ClipboardJS('.code')
             })
 
