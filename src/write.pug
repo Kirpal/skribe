@@ -16,18 +16,21 @@ html
                 img#viewer-icon(src="https://rawgit.com/Kirpal/skribe/master/src/images/ic_group_black_24dp_2x.png")
                 div#viewer-number 325
             div#emojis
-                div.vote(data-emoji="laughing")
+                div.vote(data-emoji="heart")
                     img(src="https://twemoji.maxcdn.com/2/72x72/1f602.png", class="emojiIcons")
-                    div.emoji-num=23
-                div.vote(data-emoji="hearts")
+                    div.emoji-num= votes["heart"]
+                div.vote(data-emoji="laugh")
                     img(src="https://twemoji.maxcdn.com/2/72x72/1f60d.png", class="emojiIcons")
-                    div.emoji-num=23
-                div.vote(data-emoji="dead")
+                    div.emoji-num= votes["laugh"]
+                div.vote(data-emoji="thumbs-up")
                     img(src="https://twemoji.maxcdn.com/2/72x72/1f635.png", class="emojiIcons")
-                    div.emoji-num=23
-                div.vote(data-emoji="crying")	
+                    div.emoji-num= votes["thumbs-up"]
+                div.vote(data-emoji="thumbs-down")	
                     img(src="https://twemoji.maxcdn.com/2/72x72/1f62d.png", class="emojiIcons")
-                    div.emoji-num=23
+                    div.emoji-num= votes["thumbs-down"]
+                div.vote(data-emoji="love")	
+                    img(src="https://twemoji.maxcdn.com/2/72x72/1f62d.png", class="emojiIcons")
+                    div.emoji-num= votes["love"]
 
         script(src="/socket.io/socket.io.js")
         script(src="https://code.jquery.com/jquery-3.3.1.min.js")
