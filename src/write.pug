@@ -14,7 +14,7 @@ html
         div#bottom-bar
             div#viewers
                 img#viewer-icon(src="https://rawgit.com/Kirpal/skribe/master/src/images/ic_group_black_24dp_2x.png")
-                div#viewer-number 325
+                div#viewer-number 0
             div#emojis
                 div.vote(data-emoji="heart")
                     img.emojiIcons(src="https://twemoji.maxcdn.com/2/72x72/1f602.png")
@@ -75,7 +75,7 @@ html
             });
 
             socket.on("updateViewers", (viewers) => {
-                $('#viewer-num').html(viewers)
+                $('#viewer-number').html(viewers)
             });
             socket.on("vote", (vote) => {
                 $('.vote[data-emoji=' + vote.vote + ']').children('.emoji-num').html(vote.count)
