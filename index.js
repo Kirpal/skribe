@@ -17,7 +17,7 @@ db.once('open', () => {
         title: String,
         prompt: String,
         private: Boolean,
-        viewers: Number,
+        viewers:  {type: Number, default: 0},
         story: [
             {
                 author: String,
@@ -25,11 +25,11 @@ db.once('open', () => {
             }
         ],
         votes: {
-            heart: Number,
-            laugh: Number,
-            'thumbs-up': Number,
-            'thumbs-down': Number,
-            love: Number
+            heart: {type: Number, default: 0},
+            laugh: {type: Number, default: 0},
+            'thumbs-up': {type: Number, default: 0},
+            'thumbs-down': {type: Number, default: 0},
+            love:  {type: Number, default: 0}
         }
     });
 

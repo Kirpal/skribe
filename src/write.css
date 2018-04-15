@@ -21,8 +21,11 @@
 }
 
 #story {
+  position: relative;
   font: 18px "Lora", "serif";
   line-height: 1.6em;
+  width: 80%;
+  left: 10%;
 }
 #story p {
   box-sizing: border-box;
