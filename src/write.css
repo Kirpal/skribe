@@ -1,5 +1,15 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans|PT+Serif:700|Lora");
+body, html {
+  width: 100%;
+}
+
+#content {
+  position: fixed;
+  width: 100%;
+  bottom: 60px;
+}
+
 #title {
   font: 30px "Fira Sans", "sans-serif";
   display: block;
@@ -21,16 +31,21 @@
 }
 
 #story {
-  position: relative;
   font: 18px "Lora", "serif";
   line-height: 1.6em;
+  text-align: center;
   width: 80%;
-  left: 10%;
+  margin-left: 10%;
 }
 #story p {
-  box-sizing: border-box;
   border-left: 4px transparent solid;
+  padding: 0;
   padding-left: 8px;
+  width: 100%;
+  max-width: 800px;
+  text-align: left;
+  display: inline-block;
+  box-sizing: border-box;
 }
 #story p#current {
   border-left-color: #ff4a4a;
@@ -45,6 +60,12 @@
   height: 35px;
   bottom: 0;
   left: 0;
+}
+#bottom-bar #bottom-bar-inner {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  margin: 0 auto;
 }
 #bottom-bar #viewers {
   position: absolute;
@@ -61,6 +82,9 @@
   display: inline-block;
   vertical-align: middle;
 }
+#bottom-bar #emojis {
+  display: inline-block;
+}
 #bottom-bar #emojis .vote {
   display: inline-block;
   margin: 0px 10px;
@@ -75,4 +99,35 @@
   font: 15px "Fira Sans", "sans-serif";
   vertical-align: middle;
   margin-left: 5px;
+}
+
+#reactions {
+  width: 100px;
+  height: 100%;
+  position: absolute;
+  bottom: 30px;
+  left: 7px;
+}
+#reactions .icon {
+  background-color: transparent;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 100%;
+  background-size: cover;
+}
+#reactions .icon.heart {
+  background-image: url("https://twemoji.maxcdn.com/2/72x72/2665.png");
+}
+#reactions .icon.laugh {
+  background-image: url("https://twemoji.maxcdn.com/2/72x72/1f602.png");
+}
+#reactions .icon.thumbs-up {
+  background-image: url("https://twemoji.maxcdn.com/2/72x72/1f44d.png");
+}
+#reactions .icon.thumbs-down {
+  background-image: url("https://twemoji.maxcdn.com/2/72x72/1f44e.png");
+}
+#reactions .icon.love {
+  background-image: url("https://twemoji.maxcdn.com/2/72x72/1f60d.png");
 }
