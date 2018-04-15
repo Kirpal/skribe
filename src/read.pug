@@ -8,6 +8,7 @@ html
             div#text
                 each paragraph in story
                     p(data-color=paragraph.author.color)= paragraph.text
+                p#current
         section#bottom-bar
             div#bottom-bar-inner
                 div#title= title
@@ -49,6 +50,10 @@ html
                 $(element).css('border-left-color', $(element).data('color'))
             })
 
+            socket.on('updateStory', (words) => {
+                $('#current').html(words.slice(0, -1).join(' '))
+                $('<span class="word"></span').html(' ' + words.slice(-1)).fadeOut(0).appendTo('#current').fadeIn(100)
+            });
             socket.on("updateViewers", (viewers) => {
                 $('#viewer-num').html(viewers)
             });
