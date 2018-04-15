@@ -19,8 +19,9 @@ html
         script(src="https://code.jquery.com/jquery-3.3.1.min.js")
         script.
             function onSignIn(googleUser) {
-                $.post('/login', {id: googleUser.getAuthResponse().id_token}, (res) => {
-                    console.log(res)
-                    console.log(JSON.decode(res))
-                });
+                if (!window.localStorage.user) {
+                    $.post('/login', {id: googleUser.getAuthResponse().id_token}, (res) => {
+                        window.localStorage.user = JSON.parse(res).id;
+                    });
+                }
             }

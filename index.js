@@ -73,7 +73,6 @@ db.once('open', () => {
     })
     
     app.post('/login', (req, res) => {
-        console.log(req.body.id)
         async function verify(token) {
             const ticket = await client.verifyIdToken({
                 idToken: token,
@@ -88,7 +87,6 @@ db.once('open', () => {
             })
             user.save((err, user) => {
                 if(!err) {
-                    console.log(user)
                     res.json({id: user.id})
                 }
             });
@@ -98,7 +96,7 @@ db.once('open', () => {
 
     app.post('/create', (req, res) => {
         let story = new Story({
-            //author: req.body.author,
+            author: req.body.author,
             title: req.body.title,
             prompt: req.body.prompt,
             private: req.body.private

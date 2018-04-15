@@ -22,5 +22,11 @@ html
                     label(for="privacy")
                     span Private?
                 
-                input(name="author", type="hidden")
+                input#author(name="author", type="hidden")
                 button(type="submit") Create
+        script.
+            if(window.localStorage.user) {
+                document.getElementById('author').value = window.localStorage.user;
+            } else {
+                window.location = "/login";
+            }
