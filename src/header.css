@@ -69,3 +69,98 @@ html, body {
 #nav ul li:hover:not(#my-signin2)::after {
   width: 80%;
 }
+
+#genres {
+  position: absolute;
+  width: 100%;
+  max-width: 527px;
+  right: 30px;
+  top: 80px;
+  box-shadow: 0px 10px 30px -10px rgba(0, 0, 0, 0.2), 0px -10px 30px -10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+  -webkit-transform-origin: 50% 0;
+          transform-origin: 50% 0;
+  opacity: 0;
+  visibility: hidden;
+  cursor: default;
+  transition: all 0.2s, display 0s 0s;
+}
+#genres.active {
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  display: block;
+  visibility: visible;
+  transition: all 0.2s, display 0s 0.2s;
+}
+#genres::before {
+  content: "";
+  display: block;
+  position: absolute;
+  border: 20px transparent solid;
+  border-bottom-color: #FFF;
+  top: -35px;
+  right: 230px;
+}
+#genres .genre {
+  cursor: pointer;
+  text-align: left;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 250px;
+  display: inline-block;
+  font: 15px "Lora", "sans-serif";
+  height: 60px;
+  position: relative;
+  background: #ff4a4a;
+  margin: 5px;
+}
+#genres .genre .overlay {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#genres .genre .overlay .titles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 13px;
+}
+#genres .genre .overlay .titles .genre {
+  font: 20px "Fira Sans", "sans-serif";
+  color: #FFF;
+  opacity: 1;
+  font-weight: bold;
+}
+#genres .genre .overlay .stories {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding-right: 13px;
+  padding-bottom: 13px;
+}
+#genres .genre .overlay .stories .icon {
+  background-image: url("https://rawgit.com/Kirpal/skribe/master/src/images/ic_description_black_24dp_2x.png");
+  width: 15px;
+  height: 15px;
+  background-size: cover;
+  -webkit-filter: invert(100%);
+          filter: invert(100%);
+  opacity: 0.7;
+  display: inline-block;
+  vertical-align: middle;
+}
+#genres .genre .overlay .stories .number {
+  font: 12px "Fira Sans", "sans-serif";
+  display: inline-block;
+  color: #FFF;
+  opacity: 0.7;
+  vertical-align: middle;
+}

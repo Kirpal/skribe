@@ -15,6 +15,16 @@ html
                     li Stories
                     .g-signin2(data-onsuccess="onSignIn")
 
+                    div#genres
+                        each val in [1, 2, 3, 4, 5, 6, 7, 8]
+                            div.genre
+                                div.overlay
+                                    div.titles
+                                        div.genre Fantasy
+                                    div.stories
+                                        div.icon
+                                        div.number 156
+
         script(src="https://apis.google.com/js/platform.js",async="true", defer="true")
         script(src="https://code.jquery.com/jquery-3.3.1.min.js")
         script.
@@ -27,3 +37,13 @@ html
             if(window.sessionStorage.user) {
                 $('.g-signin2').replaceWith('<div class="user">Logout</div>')
             }
+            
+            $("#genre-link").click(function(){
+                $("#genres").addClass("active");
+            });
+            $(document).click(function(){
+                if($("#genres:hover").length == 0 && $("#genre-link:hover").length == 0)
+                {
+                    $("#genres").removeClass("active");
+                }
+            });
