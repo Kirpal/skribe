@@ -30,14 +30,9 @@ html
             if(window.sessionStorage.user) {
                 $('#author').val(window.sessionStorage.user);
             } else {
-                $('button[type="submit"]').replaceWith('<div class="g-signin2" data-onsuccess="onSignInSubmit"></div>')
-                function onSignInSubmit(googleUser) {
-                    if (!window.sessionStorage.user) {
-                        $.post('/login', {id: googleUser.getAuthResponse().id_token}, (res) => {
-                            window.sessionStorage.user = JSON.parse(res).id;
-                            $('#author').val(window.sessionStorage.user);
-                            $('form').submit();
-                        });
-                    }
-                }
+                $('button[type="submit"]').replaceWith('<div class="g-signin2" data-onsuccess="onSignIn"></div>').click((e) => {
+                    $('#author').val(window.sessionStorage.user);
+                    $(e.target).parent('form').submit()
+                })
+                
             }
