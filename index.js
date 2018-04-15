@@ -47,7 +47,7 @@ db.once('open', () => {
     app.use(express.json())
     
     app.get('/', (req, res) => {
-    
+        res.render(__dirname + '/src/home.pug');
     })
     
     app.get('/story/:room/:mode', (req, res) => {

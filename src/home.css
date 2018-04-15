@@ -1,0 +1,177 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans|PT+Serif:700");
+body {
+  font: 20px "Fira Sans", "sans-serif";
+}
+
+#header {
+  padding: 10px;
+}
+#header #logo {
+  position: absolute;
+}
+
+img {
+  height: 30px;
+}
+
+#nav {
+  float: right;
+}
+#nav ul {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+#nav ul .g-signin2 {
+  width: 100px;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: 0.2s all;
+  margin-left: 10px;
+}
+#nav ul .g-signin2 * {
+  box-shadow: none;
+}
+#nav ul .g-signin2:hover {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+#nav ul .g-signin2 .abcRioButtonContents {
+  margin-left: -20px;
+}
+#nav ul li {
+  display: inline-block;
+  color: #000;
+  padding: 5px 0px;
+  margin: 0px 15px;
+  cursor: pointer;
+  transition: 0.1s all;
+}
+#nav ul li::after {
+  content: "";
+  height: 3px;
+  width: 0px;
+  margin-left: 1px;
+  margin-top: 0px;
+  background: #ff4a4a;
+  display: block;
+  transition: all 0.2s;
+}
+#nav ul li:hover:not(#my-signin2) {
+  padding-bottom: 2px;
+}
+#nav ul li:hover:not(#my-signin2)::after {
+  width: 80%;
+}
+
+#content {
+  text-align: center;
+  padding-top: 20px;
+  width: 60%;
+  margin: auto;
+}
+
+#live {
+  width: 100%;
+  text-align: center;
+  margin-top: 40px;
+}
+#live .live-preview {
+  cursor: pointer;
+  text-align: left;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 250px;
+  display: inline-block;
+  font: 15px "Lora", "sans-serif";
+  height: 150px;
+  position: relative;
+  background: #ff4a4a;
+  margin: 10px;
+}
+#live .live-preview .words {
+  height: 100%;
+  overflow: hidden;
+  padding: 10px;
+  color: #FFF;
+  opacity: 0.7;
+}
+#live .live-preview .words .old, #live .live-preview .words .new {
+  display: inline;
+}
+#live .live-preview .overlay {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#live .live-preview .overlay .titles {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 13px;
+}
+#live .live-preview .overlay .titles .title {
+  font: 20px "Fira Sans", "sans-serif";
+  color: #FFF;
+  opacity: 1;
+  font-weight: bold;
+}
+#live .live-preview .overlay .titles .genre {
+  font: 12px "Fira Sans", "sans-serif";
+  color: #FFF;
+  opacity: 0.7;
+  font-weight: bold;
+}
+#live .live-preview .overlay .viewers {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding-right: 13px;
+  padding-bottom: 13px;
+}
+#live .live-preview .overlay .viewers .icon {
+  background-image: url("https://rawgit.com/Kirpal/skribe/master/src/images/ic_group_black_24dp_2x.png");
+  width: 15px;
+  height: 15px;
+  background-size: cover;
+  filter: invert(100%);
+  opacity: 0.7;
+  display: inline-block;
+  vertical-align: middle;
+}
+#live .live-preview .overlay .viewers .number {
+  font: 12px "Fira Sans", "sans-serif";
+  display: inline-block;
+  color: #FFF;
+  opacity: 0.7;
+  vertical-align: middle;
+}
+
+#footer {
+  margin-top: 100px;
+  text-align: center;
+}
+#footer div {
+  font: 13px "Fira Sans", "sans-serif";
+  padding: 10px 0px;
+}
+#footer a {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 5px;
+}
+#footer img {
+  width: 50px;
+  height: 50px;
+}
+#footer #hack-text {
+  display: inline;
+  vertical-align: middle;
+}
