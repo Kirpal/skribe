@@ -44,6 +44,7 @@ db.once('open', () => {
     
     app.use("/static", express.static(__dirname + '/src'))
     app.use(express.urlencoded())
+    app.use(express.json())
     
     app.get('/', (req, res) => {
     
@@ -72,9 +73,9 @@ db.once('open', () => {
     })
     
     app.post('/login', (req, res) => {
-        async function verify() {
+        async function verify(token) {
             const ticket = await client.verifyIdToken({
-                idToken: req.params.id,
+                idToken: token,
                 audience: '179911329052-bt7801c9hu6gqh174qv0jl28clftchj1.apps.googleusercontent.com',
             });
             const payload = ticket.getPayload();
@@ -91,7 +92,7 @@ db.once('open', () => {
                 }
             });
         }
-        verify().catch(console.error);
+        verify(req.params.id).catch(console.error);
     })
 
     app.post('/create', (req, res) => {
