@@ -19,7 +19,7 @@ html
         script(src="https://code.jquery.com/jquery-3.3.1.min.js")
         script.
             function onSignIn(googleUser) {
-                window.sessionStorage.user = JSON.parse(res).id;
+                window.sessionStorage.user = googleUser.getBasicProfile.getId();
                 $.post('/login', {id: googleUser.getAuthResponse().id_token}, (res) => {
                     if(window.sessionStorage.user !== JSON.parse(res).id) {
                         window.sessionStorage.user === JSON.parse(res).id
