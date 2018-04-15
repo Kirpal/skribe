@@ -1,0 +1,100 @@
+doctype html
+html
+	head
+		link(rel="stylesheet", href="/static/view.css", type="text/css")
+	body
+        include header.pug
+        section#story
+            div#text
+                each paragraph in story
+                    p(data-color=paragraph.author.color)= paragraph.text
+        section#bottom-bar
+            div#bottom-bar-inner
+                div#title The Great Gatsby
+                div#authors
+                    div#author Luca Demian
+                    div#next-author Kirpal Demian
+                    div#reactions
+                div#reaction-buttons
+                    div.reaction-button.heart(data-emoji="heart")
+                    div.reaction-button.laugh(data-emoji="laugh")
+                    div.reaction-button.thumbs-up(data-emoji="thumbs-up")
+                    div.reaction-button.thumbs-down(data-emoji="thumbs-down")
+                    div.reaction-button.love(data-emoji="love")
+
+
+        script(src="/socket.io/socket.io.js")
+        script(src="https://code.jquery.com/jquery-3.3.1.min.js")
+        script(src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js")
+        script.
+        
+            $("#reactions").css("width", $("#reaction-buttons").width() + "px");
+            var lastReact = 0;
+
+            const socket = io();
+            const room = "#{room}";
+
+            socket.on('connect', () => {
+                socket.emit('room', room);
+                $('.code').val(room);
+                new ClipboardJS('.code')
+            })
+
+            $('.reaction-button').click((e) => {
+                socket.emit('vote', $(e.target).parent('.reaction-button').data('emoji'));
+            })
+
+            $('#story').children('p').each((idx, element) => {
+                console.log(element)
+                $(element).css('border-left-color', $(element).data('color'))
+            })
+
+            socket.on("updateViewers", (viewers) => {
+                $('#viewer-num').html(viewers)
+            });
+            socket.on("vote", (vote) => {
+                leftPos = ($(".reaction-button."+vote.vote).offset().left - $("#reaction-buttons").offset().left);
+                emojiType = vote.vote;
+                element = $("<div class='icon "+emojiType+"' data-original='"+leftPos+"'></div>");
+                $("#reactions").append(element);
+                element.css("left", leftPos + "px");
+                lastReact = (new Date).getTime();
+            });
+            $(".reaction-button").click(function(){
+                emojiType = $(this).data("emoji");
+                if((new Date).getTime() > lastReact + 1000)
+                {
+                    socket.emit('vote', emojiType);
+                }
+            });
+            setInterval(function(){
+                $("#reactions .icon").each(function(){
+                    element = $(this);
+                    original = element.attr("data-original");
+                    parentHeight = $("#reactions").height();
+                    vertical = element.position().top;
+                    horizontal = element.position().left;
+                    size = element.width();
+                    leftChange = Math.random() * 1 * (Math.round(Math.random()) == 1 ? -1 : 1 );
+                    opacity = parseFloat(element.css("opacity"));
+                    if(leftChange + horizontal < original - 16 && leftChange < 0)
+                    {
+                        leftChange = -leftChange;
+                    }
+                    if(leftChange + horizontal > original + 16 && leftChange > 0)
+                    {
+                        leftChange = -leftChange;
+                    }
+                    
+                    if(opacity <= 0)
+                    {
+                        element.remove();
+                    }
+                    
+                    element.css({
+                        "top": (vertical - 1) + "px",
+                        "left": (horizontal + leftChange) + "px",
+                        "opacity": opacity - 0.005
+                    });
+                });
+            }, 10);
