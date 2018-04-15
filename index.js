@@ -8,6 +8,9 @@ const randomstring = require('randomstring');
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client('179911329052-bt7801c9hu6gqh174qv0jl28clftchj1.apps.googleusercontent.com');
 
+let timers = {};
+let queue = [];
+
 mongoose.connect(process.env.MONGO_URL);
 let db = mongoose.connection;
 db.once('open', () => {
@@ -105,6 +108,15 @@ db.once('open', () => {
 
         story.save((err, story) => {
             if (!err) {
+                timers[story._id] = setInterval(() => {
+                    queue.shift();
+                    
+                    io.to(story._id).emit('timout', queue);
+                    
+                    // chose next person
+                    // emit change event
+                    // store paragraph
+                }, 3000) // 3minutes
                 res.redirect('/story/' + story._id + '/write')
             }
         });
@@ -123,13 +135,23 @@ db.once('open', () => {
                 }
             });
         });
+
+        socket.on('user', (user) => {
+            queue.push({socket: socket.id, user: user})
+        });
     
         socket.on('disconnect', () => {
-            Story.findById(socket.room, (err, story) => {
-                if (story) {
-                    story.viewers -= 1;
-                    socket.broadcast.to(socket.room).emit("updateViewers", story.viewers);
-                    story.save();
+            io.in(socket.room).clients((err, clients) => {
+                if(clients.length > 0) {
+                    Story.findById(socket.room, (err, story) => {
+                        if (story) {
+                            story.viewers -= 1;
+                            socket.broadcast.to(socket.room).emit("updateViewers", story.viewers);
+                            story.save();
+                        }
+                    });
+                } else {
+                    Story.remove({_id: socket.room});
                 }
             });
         });
@@ -154,7 +176,6 @@ db.once('open', () => {
         });
         socket.on('vote', (vote) => {
             Story.findById(socket.room, (err, story) => {
-                console.log(vote)
                 if (story) {
                     story.votes[vote] += 1;
                     socket.broadcast.to(socket.room).emit("vote", {vote: vote, count: story.votes[vote]});

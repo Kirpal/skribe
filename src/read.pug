@@ -28,73 +28,76 @@ html
         script(src="https://code.jquery.com/jquery-3.3.1.min.js")
         script(src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js")
         script.
-        
-            $("#reactions").css("width", $("#reaction-buttons").width() + "px");
-            var lastReact = 0;
+            $(window).ready(() => {
+                $("#reactions").css("width", $("#reaction-buttons").width() + "px");
+                var lastReact = 0;
 
-            const socket = io();
-            const room = "#{room}";
+                const socket = io();
+                const room = "#{room}";
 
-            socket.on('connect', () => {
-                socket.emit('room', room);
-                $('.code').val(room);
-                if(window.sessionStorage.user) {
-                    socket.emit('user', window.sessionStorage.user);
-                }
-                new ClipboardJS('.code')
-            })
-
-            $('#story').children('p').each((idx, element) => {
-                console.log(element)
-                $(element).css('border-left-color', $(element).data('color'))
-            })
-
-            socket.on('updateStory', (words) => {
-                $('#current').html(words.slice(0, -1).join(' '))
-                $('<span class="word"></span').html(' ' + words.slice(-1)).fadeOut(0).appendTo('#current').fadeIn(100)
-            });
-            socket.on("updateViewers", (viewers) => {
-                $('#viewer-num').html(viewers)
-            });
-            $(".reaction-button").click(function(){
-                emojiType = $(this).data("emoji");
-                if((new Date).getTime() > lastReact + 1000) {
-                    leftPos = ($(this).offset().left - $("#reaction-buttons").offset().left);
-                    element = $("<div class='icon "+emojiType+"' data-original='"+leftPos+"'></div>");
-                    $("#reactions").append(element);
-                    element.css("left", leftPos + "px");
-                    lastReact = (new Date).getTime();
-                    socket.emit('vote', emojiType);
-                }
-            });
-            setInterval(function(){
-                $("#reactions .icon").each(function(){
-                    element = $(this);
-                    original = element.attr("data-original");
-                    parentHeight = $("#reactions").height();
-                    vertical = element.position().top;
-                    horizontal = element.position().left;
-                    size = element.width();
-                    leftChange = Math.random() * 1 * (Math.round(Math.random()) == 1 ? -1 : 1 );
-                    opacity = parseFloat(element.css("opacity"));
-                    if(leftChange + horizontal < original - 16 && leftChange < 0)
-                    {
-                        leftChange = -leftChange;
+                socket.on('connect', () => {
+                    socket.emit('room', room);
+                    $('.code').val(room);
+                    if(window.sessionStorage.user) {
+                        socket.emit('user', window.sessionStorage.user);
                     }
-                    if(leftChange + horizontal > original + 16 && leftChange > 0)
-                    {
-                        leftChange = -leftChange;
-                    }
-                    
-                    if(opacity <= 0)
-                    {
-                        element.remove();
-                    }
-                    
-                    element.css({
-                        "top": (vertical - 1) + "px",
-                        "left": (horizontal + leftChange) + "px",
-                        "opacity": opacity - 0.005
-                    });
+                    new ClipboardJS('.code')
+                })
+
+                $('#story').children('p').each((idx, element) => {
+                    console.log(element)
+                    $(element).css('border-left-color', $(element).data('color'))
+                })
+
+                socket.on('updateStory', (words) => {
+                    $('#current').html(words.slice(0, -1).join(' '))
+                    $('<span class="word"></span').html(' ' + words.slice(-1)).fadeOut(0).appendTo('#current').fadeIn(100)
                 });
-            }, 10);
+                socket.on("updateViewers", (viewers) => {
+                    $('#viewer-num').html(viewers)
+                });
+                $(".reaction-button").click(function(){
+                    emojiType = $(this).data("emoji");
+                    if((new Date).getTime() > lastReact + 1000) {
+                        leftPos = ($(this).offset().left - $("#reaction-buttons").offset().left);
+                        element = $("<div class='icon "+emojiType+"' data-original='"+leftPos+"'></div>");
+                        $("#reactions").append(element);
+                        element.css("left", leftPos + "px");
+                        lastReact = (new Date).getTime();
+                        socket.emit('vote', emojiType);
+                    }
+                });
+                setInterval(() => {
+                    $("#reactions .icon").each(function(){
+                        element = $(this);
+                        original = element.attr("data-original");
+                        parentHeight = $("#reactions").height();
+                        vertical = element.position().top;
+                        horizontal = element.position().left;
+                        size = element.width();
+                        leftChange = Math.random() * 1 * (Math.round(Math.random()) == 1 ? -1 : 1 );
+                        opacity = parseFloat(element.css("opacity"));
+                        if(leftChange + horizontal < original - 16 && leftChange < 0)
+                        {
+                            leftChange = -leftChange;
+                        }
+                        if(leftChange + horizontal > original + 16 && leftChange > 0)
+                        {
+                            leftChange = -leftChange;
+                        }
+                        
+                        if(opacity <= 0)
+                        {
+                            element.remove();
+                        }
+                        
+                        element.css({
+                            "top": (vertical - 1) + "px",
+                            "left": (horizontal + leftChange) + "px",
+                            "opacity": opacity - 0.005
+                        });
+                    });
+                }, 10);
+            })
+        
+            
