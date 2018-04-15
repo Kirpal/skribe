@@ -91,7 +91,7 @@ html, body {
   opacity: 0;
   visibility: hidden;
   cursor: default;
-  transition: all 0.2s, display 0s 0s;
+  transition: all 0.2s;
 }
 #genres.active {
   opacity: 1;
