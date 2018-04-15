@@ -30,9 +30,6 @@ html
             if(window.sessionStorage.user) {
                 $('#author').val(window.sessionStorage.user);
             } else {
-                $('button[type="submit"]').replaceWith('<div class="g-signin2" data-onsuccess="onSignIn"></div>').click((e) => {
-                    $('#author').val(window.sessionStorage.user);
-                    $(e.target).parent('form').submit()
-                })
+                $('button[type="submit"]').replaceWith('<div class="g-signin2" data-onsuccess="onSignIn" data-callback="formSubmit"></div>')
                 
             }
