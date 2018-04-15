@@ -73,7 +73,7 @@ db.once('open', () => {
     })
     
     app.post('/login', (req, res) => {
-        console.log(req.params.id)
+        console.log(req.body.id)
         async function verify(token) {
             const ticket = await client.verifyIdToken({
                 idToken: token,
@@ -93,7 +93,7 @@ db.once('open', () => {
                 }
             });
         }
-        verify(req.params.id).catch(console.error);
+        verify(req.body.id).catch(console.error);
     })
 
     app.post('/create', (req, res) => {
