@@ -53,6 +53,11 @@ html, body {
   cursor: pointer;
   transition: 0.1s border;
 }
+#nav ul li a {
+  text-decoration: none;
+  display: inline-block;
+  color: inherit;
+}
 #nav ul li::after {
   content: "";
   height: 3px;
