@@ -35,9 +35,9 @@ html
             }
 
             if(window.sessionStorage.user) {
-                $('.g-signin2').replaceWith('<div class="user">Logout</div>')
+                $('.g-signin2').replaceWith('<li class="user"><a href="/create">Create Story</a></div>')
             }
-            
+
             $("#genre-link").click(function(){
                 $("#genres").addClass("active");
             });
