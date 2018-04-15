@@ -10,10 +10,22 @@ html
                 img(src="/static/images/logo.svg")
             nav#nav
                 ul
-                    li Home
+                    li
+                        a(href="/") Home
                     li Genres
-                    li Stories
+                    li
+                        a(href="/stories") Stories
                     .g-signin2(data-onsuccess="onSignIn")
+
+                    div#genres
+                        each val in [1, 2, 3, 4, 5, 6, 7, 8]
+                            div.genre
+                                div.overlay
+                                    div.titles
+                                        div.genre Fantasy
+                                    div.stories
+                                        div.icon
+                                        div.number 156
 
         script(src="https://apis.google.com/js/platform.js",async="true", defer="true")
         script(src="https://code.jquery.com/jquery-3.3.1.min.js")
@@ -23,3 +35,17 @@ html
                     window.sessionStorage.user = res.id;
                 });
             }
+
+            if(window.sessionStorage.user) {
+                $('.g-signin2').replaceWith('<li class="user"><a href="/create">Create Story</a></div>')
+            }
+
+            $("#genre-link").click(function(){
+                $("#genres").addClass("active");
+            });
+            $(document).click(function(){
+                if($("#genres:hover").length == 0 && $("#genre-link:hover").length == 0)
+                {
+                    $("#genres").removeClass("active");
+                }
+            });

@@ -1,0 +1,32 @@
+doctype html
+html
+    head
+        link(rel="stylesheet", href="/static/home.css", type="text/css")
+
+    body
+        include header.pug
+        div#content
+            h1 Calling all writers!
+            p Skrībe is a place where you can practice writing and get instant feedback from other skilled writers all around the world. Check out one of the live stories below to see what it's all about:
+            
+        section#live
+            each val in [1, 2, 3]
+                div.live-preview
+                    div.words
+                        div.old The Man Jumped off the building and his name was
+                        div.new Joe
+                    div.overlay
+                        div.titles
+                            div.title Story #{val}
+                            div.genre Fantasy
+                        div.viewers
+                            div.icon
+                            div.number 156
+
+        div#footer
+            div Developed by Kirpal Demian, Luca Demian, and Zachary McDaniel
+            a(href="https://github.com/Kirpal/skribe" target="_blank")
+                img(src="https://rawgit.com/zamcdaniel19/skribe/master/src/images/GitHub-Mark.png")
+            a(href="http://hackdartmouth.io" target="_blank")
+                img(src="https://pbs.twimg.com/profile_images/635600267002576900/F4_CEgxo_400x400.png")
+            
