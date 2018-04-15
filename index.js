@@ -40,33 +40,18 @@ db.once('open', () => {
     
     })
     
-    app.get('/story/:room/write', (req, res) => {
-        if(Object.keys(rooms).indexOf(req.params.room) !== -1) {
-        } else {
-            res.redirect('/create');
-        }
-
-        Story.find({_id: req.params.room}, (err, stories) => {
-            if(stories.length > 0) {
-                story = stories[0];
-                res.render(__dirname + "/src/write.pug", {
+    app.get('/story/:room/:mode', (req, res) => {
+        Story.findById(req.params.room, (err, story) => {
+            if(story) {
+                res.render(__dirname + "/src/" + req.params.mode + ".pug", {
                     room: story._id,
                     story: story.story,
                     votes: story.votes
                 });
-            }
-        })
-    });
-    
-    app.get('/story/:room/read', (req, res) => {
-        Story.findById(req.params.room, (err, story) => {
-            if(story) {
-                story = stories[0];
-                res.render(__dirname + "/src/read.pug", {room: story._id, story: story.story, vot});
             } else {
                 res.redirect('/create');
             }
-        })
+        });
     });
 
     app.get('/story/:room', (req, res) => {
