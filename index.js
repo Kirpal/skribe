@@ -50,6 +50,10 @@ db.once('open', () => {
         res.render(__dirname + '/src/home.pug');
     })
     
+    app.get('/stories', (req, res) => {
+        res.render(__dirname + '/src/list.pug');
+    })
+
     app.get('/story/:room/:mode', (req, res) => {
         Story.findById(req.params.room, (err, story) => {
             if(story) {
