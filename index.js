@@ -127,7 +127,7 @@ db.once('open', () => {
             Story.findById(socket.room, (err, story) => {
                 if (story) {
                     story.viewers -= 1;
-                    io.to(room).emit("updateViewers", story.viewers);
+                    io.to(socket.room).emit("updateViewers", story.viewers);
                 }
             });
         });
