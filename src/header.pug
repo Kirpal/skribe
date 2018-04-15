@@ -16,7 +16,7 @@ html
                     .g-signin2(data-onsuccess="onSignIn")
 
         script(src="https://apis.google.com/js/platform.js",async="true", defer="true")
-
+        script(src="https://code.jquery.com/jquery-3.3.1.min.js")
         script.
             function onSignIn(googleUser) {
                 $.post('/login', {id: googleUser.getAuthResponse().id_token}, (res) => {
