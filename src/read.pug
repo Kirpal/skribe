@@ -13,8 +13,8 @@ html
             div#bottom-bar-inner
                 div#title= title
                 div#authors
-                    div#author Luca Demian
-                    div#next-author Kirpal Demian
+                    div#author Writing: Luca Demian
+                    div#next-author Up-next: Kirpal Demian
                     div#reactions
                 div#reaction-buttons
                     div.reaction-button.heart(data-emoji="heart")
@@ -59,13 +59,13 @@ html
             });
             $(".reaction-button").click(function(){
                 emojiType = $(this).data("emoji");
-                socket.emit('vote', emojiType);
                 if((new Date).getTime() > lastReact + 1000) {
                     leftPos = ($(this).offset().left - $("#reaction-buttons").offset().left);
                     element = $("<div class='icon "+emojiType+"' data-original='"+leftPos+"'></div>");
                     $("#reactions").append(element);
                     element.css("left", leftPos + "px");
                     lastReact = (new Date).getTime();
+                    socket.emit('vote', emojiType);
                 }
             });
             setInterval(function(){
